@@ -1,38 +1,33 @@
 <template>
 <div id="app">
     <div>
-      <h2>新闻列表</h2>
-      <button v-on:click="onReload">刷新</button>
-      <div>
-        <ul>
-            <li v-for="item in news">
-              {{item.title}}
-            </li>
-        </ul>
-      </div>
+        <h2>新闻列表</h2>
+        <button v-on:click="onReload">刷新</button>
+        <div>
+            <ul>
+                <li v-for="item in news">
+                    {{item.title}}
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
     name: 'app',
-    data: function() {
-        return {
-            news:[]
-        };
+    computed: {
+        news() {
+            return this.$store.state.news;
+        }
     },
     methods: {
         onReload: function() {
-            axios.get('http://7xr9y9.com1.z0.glb.clouddn.com/news-demo/news.json')
-                .then((response) => {
-                  this.news=response.data.news;
-                })
+            this.$store.commit('loadNews');
         }
     },
-    mounted:function(){
+    mounted: function() {
         this.onReload();
     }
 }
