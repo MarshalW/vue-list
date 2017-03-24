@@ -12,10 +12,15 @@ new Vue({
             news: []
         },
         mutations: {
-            loadNews(state) {
+            loadNews(state,news) {
+                state.news=news;
+            }
+        },
+        actions: {
+            loadNews(context) {
                 axios.get('http://7xr9y9.com1.z0.glb.clouddn.com/news-demo/news.json')
                     .then((response) => {
-                        state.news = response.data.news;
+                        context.commit('loadNews', response.data.news);
                     })
             }
         }

@@ -24,7 +24,7 @@ export default {
     },
     methods: {
         onReload: function() {
-            this.$store.commit('loadNews');
+            this.$store.dispatch('loadNews');
         }
     },
     mounted: function() {
