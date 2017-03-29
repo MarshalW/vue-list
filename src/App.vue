@@ -6,7 +6,7 @@
         <div>
             <ul>
                 <li v-for="item in news">
-                    {{item.title}}
+                    <NewsItem :news="item" />
                 </li>
             </ul>
         </div>
@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import NewsItem from './NewsItem.vue';
+
 export default {
     name: 'app',
     computed: {
@@ -29,6 +31,9 @@ export default {
     },
     mounted: function() {
         this.onReload();
+    },
+    components:{
+      NewsItem
     }
 }
 </script>

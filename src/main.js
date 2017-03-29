@@ -3,7 +3,11 @@ import Vuex from 'vuex';
 import axios from 'axios';
 import App from './App.vue';
 
+// import NewsItem from './NewsItem.vue';
+
 Vue.use(Vuex);
+
+// Vue.component('NewsItem',NewsItem);
 
 new Vue({
     el: '#app',
