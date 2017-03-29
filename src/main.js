@@ -3,11 +3,7 @@ import Vuex from 'vuex';
 import axios from 'axios';
 import App from './App.vue';
 
-// import NewsItem from './NewsItem.vue';
-
 Vue.use(Vuex);
-
-// Vue.component('NewsItem',NewsItem);
 
 new Vue({
     el: '#app',
@@ -22,7 +18,7 @@ new Vue({
         },
         actions: {
             loadNews(context) {
-                axios.get('http://7xr9y9.com1.z0.glb.clouddn.com/news-demo/news.json')
+                axios.get('http://7d9ltk.com1.z0.glb.clouddn.com/data.json')
                     .then((response) => {
                         context.commit('loadNews', response.data.news);
                     })
