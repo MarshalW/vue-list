@@ -2,7 +2,7 @@
 <div id="app">
     <div>
         <h2>新闻列表</h2>
-        <button v-on:click="onReload">刷新</button>
+        <button @click="onRefresh">刷新</button>
         <div>
             <ul>
                 <li v-for="item in news">
@@ -11,6 +11,7 @@
             </ul>
         </div>
     </div>
+    <button @click="onInfinite">更多</button>
 </div>
 </template>
 
@@ -25,12 +26,18 @@ export default {
         }
     },
     methods: {
-        onReload: function() {
-            this.$store.dispatch('loadNews');
+        onRefresh: function() {
+            this.$store.dispatch('refreshNews');
+        },
+        onInit:function() {
+          this.$store.dispatch('initNews');
+        },
+        onInfinite:function(){
+          this.$store.dispatch('infiniteNews');
         }
     },
     mounted: function() {
-        this.onReload();
+        this.onInit();
     },
     components:{
       NewsItem
