@@ -1,21 +1,15 @@
 <template>
 <div id="app">
-    <div>
-        <h2>新闻列表</h2>
-        <button @click="onRefresh">刷新</button>
-        <div>
-            <ul>
-                <li v-for="item in news">
-                    <NewsItem :news="item" />
-                </li>
-            </ul>
+    <scroller style="top: 10px" :on-refresh="refresh" :on-infinite="infinite" ref="my_scroller">
+        <div v-for="item in news">
+            <NewsItem :news="item" />
         </div>
-    </div>
-    <button @click="onInfinite">更多</button>
+    </scroller>
 </div>
 </template>
 
 <script>
+import Scroller from 'vue-scroller';
 import NewsItem from './NewsItem.vue';
 
 export default {
@@ -26,21 +20,39 @@ export default {
         }
     },
     methods: {
-        onRefresh: function() {
-            this.$store.dispatch('refreshNews');
+        refresh: function() {
+            this.$store.dispatch('refreshNews').then(() => {
+                if (this.$refs.my_scroller)
+                    this.$refs.my_scroller.finishPullToRefresh();
+            });
         },
-        onInit:function() {
-          this.$store.dispatch('initNews');
+        init: function() {
+            this.$store.dispatch('initNews').then(() => {
+                this.$refs.my_scroller.resize();
+            });
+
         },
-        onInfinite:function(){
-          this.$store.dispatch('infiniteNews');
+        infinite: function() {
+            setTimeout(() => {
+                this.$store.dispatch('infiniteNews').then(() => {
+                    if (this.$refs.my_scroller) {
+                        let scroller = this.$refs.my_scroller;
+                        setTimeout(() => {
+                            scroller.finishInfinite(true);
+                        }, 10);
+                    }
+
+                });
+            }, 200);
+
         }
     },
     mounted: function() {
-        this.onInit();
+        this.init();
     },
-    components:{
-      NewsItem
+    components: {
+        NewsItem,
+        Scroller
     }
 }
 </script>
@@ -57,5 +69,9 @@ export default {
 h1,
 h2 {
     font-weight: normal;
+}
+
+.news-title {
+    font-weight: bolder;
 }
 </style>

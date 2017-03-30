@@ -9,7 +9,7 @@ let filename = 'build.js';
 
 
 if (process.env.NODE_ENV === 'production') {
-    publicPath = 'http://cdn.aliyun.com/my-id/dist/';
+    publicPath = '';
     filename = 'build.[hash].js';
 }
 

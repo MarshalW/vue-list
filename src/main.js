@@ -5,6 +5,9 @@ import App from './App.vue';
 
 Vue.use(Vuex);
 
+let start=0;
+let end=0;
+
 new Vue({
     el: '#app',
     store: new Vuex.Store({
@@ -29,18 +32,25 @@ new Vue({
                 axios.get('http://7d9ltk.com1.z0.glb.clouddn.com/init.json')
                     .then((response) => {
                         context.commit('initNews', response.data.news);
+                        start=0;
                     })
             },
             refreshNews(context) {
-                axios.get('http://7d9ltk.com1.z0.glb.clouddn.com/refresh.json')
+                axios.get(`http://7d9ltk.com1.z0.glb.clouddn.com/refresh-start-${start}.json`)
                     .then((response) => {
                         context.commit('refreshNews', response.data.news);
+                        if(response.data.news.length>0){
+                            start++;
+                        }
                     })
             },
             infiniteNews(context) {
-                axios.get('http://7d9ltk.com1.z0.glb.clouddn.com/infinite.json')
+                axios.get(`http://7d9ltk.com1.z0.glb.clouddn.com/infinite-end-${end}.json`)
                     .then((response) => {
                         context.commit('infiniteNews', response.data.news);
+                        if(response.data.news.length>0){
+                            end++;
+                        }
                     })
             }
         }
